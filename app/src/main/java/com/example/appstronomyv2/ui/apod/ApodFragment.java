@@ -1,4 +1,4 @@
-package com.example.appstronomyv2.ui.gallery;
+package com.example.appstronomyv2.ui.apod;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,22 +10,22 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.appstronomyv2.databinding.FragmentGalleryBinding;
+import com.example.appstronomyv2.databinding.FragmentApodBinding;
 
-public class GalleryFragment extends Fragment {
+public class ApodFragment extends Fragment {
 
-    private FragmentGalleryBinding binding;
+    private FragmentApodBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        GalleryViewModel galleryViewModel =
-                new ViewModelProvider(this).get(GalleryViewModel.class);
+        ApodViewModel apodViewModel =
+                new ViewModelProvider(this).get(ApodViewModel.class);
 
-        binding = FragmentGalleryBinding.inflate(inflater, container, false);
+        binding = FragmentApodBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textGallery;
-        galleryViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        final TextView textView = binding.textApod;
+        apodViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 

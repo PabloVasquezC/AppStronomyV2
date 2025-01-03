@@ -23,6 +23,13 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".ApiActivity"
+            android:exported="true"
+            android:label="ApiActivity"
+            android:theme="@style/Theme.AppStronomyV2.NoActionBar">
+        </activity>
+
         <!-- MainActivity ya no tiene intent-filter, será lanzada desde LoginActivity -->
         <activity
             android:name=".MainActivity"

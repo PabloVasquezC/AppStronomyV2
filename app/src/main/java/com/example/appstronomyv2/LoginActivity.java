@@ -73,15 +73,16 @@ public class LoginActivity extends AppCompatActivity {
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
                         Toast.makeText(LoginActivity.this, "Inicio de sesión exitoso.", Toast.LENGTH_SHORT).show();
-//                        Redirigir al main
+
+                        // Redirigir al MainActivity con el email
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                        intent.putExtra("USER_EMAIL", email); // Pasar el email como extra
                         startActivity(intent);
 
                     } else {
                         Toast.makeText(LoginActivity.this, "Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
-
     }
 
     private void registerUser(String email, String password) {

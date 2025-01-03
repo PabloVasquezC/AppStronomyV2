@@ -36,6 +36,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        String userEmail = getIntent().getStringExtra("USER_EMAIL");
+        Toast.makeText(this, "Bienvenido " + userEmail, Toast.LENGTH_SHORT).show();
+
+
         // Inicializa Room
         appDatabase = DatabaseClient.getInstance(this).getAppDatabase();
 

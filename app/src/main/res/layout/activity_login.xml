@@ -8,6 +8,15 @@
     android:orientation="vertical"
     android:padding="16dp">
 
+    <ImageView
+        android:id="@+id/imageViewScreenshot"
+        android:layout_width="369dp"
+        android:layout_height="500dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/loginheroappstronomy"
+        android:contentDescription="Pantallazo"
+        android:scaleType="centerCrop" />
+
     <EditText
         android:id="@+id/editTextEmail"
         android:layout_width="match_parent"
