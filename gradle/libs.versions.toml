@@ -1,4 +1,7 @@
 [versions]
+retrofit = "2.9.0"
+gsonConverter = "2.9.0"
+okhttp = "4.9.3"
 agp = "8.7.3"
 firebaseBom = "33.7.0"
 junit = "4.13.2"
@@ -19,6 +22,9 @@ firebaseAuth = "23.1.0"
 activity = "1.9.3"
 
 [libraries]
+retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "gsonConverter" }
+okhttp = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
 firebase-analytics = { module = "com.google.firebase:firebase-analytics" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }

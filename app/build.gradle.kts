@@ -53,4 +53,9 @@ dependencies {
     annotationProcessor(libs.room.compiler)
     implementation(libs.firebase.analytics)
     implementation(platform(libs.firebase.bom))
+
+
+    implementation(libs.retrofit)
+    implementation(libs.gson)
+    implementation(libs.okhttp)
 }
