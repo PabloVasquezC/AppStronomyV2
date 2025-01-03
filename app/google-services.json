@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "73160030818",
+    "project_id": "appstronomyv2",
+    "storage_bucket": "appstronomyv2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:73160030818:android:0d480e2149533ae67d2f3b",
+        "android_client_info": {
+          "package_name": "com.example.appstronomy"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1Qt7Tvzc9Sqz7BrvJgMLUb1_G8IClSwA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:73160030818:android:00291a8737112d457d2f3b",
+        "android_client_info": {
+          "package_name": "com.example.appstronomyv2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1Qt7Tvzc9Sqz7BrvJgMLUb1_G8IClSwA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
