@@ -16,4 +16,9 @@ public class ApodViewModel extends ViewModel {
     public LiveData<String> getText() {
         return mText;
     }
+
+    // Nuevo método para actualizar el texto
+    public void setText(String text) {
+        mText.setValue(text);
+    }
 }

@@ -1,9 +1,6 @@
 package com.example.appstronomyv2.data.database;
 
-
-
 import android.content.Context;
-
 import androidx.room.Room;
 
 public class DatabaseClient {
@@ -15,7 +12,9 @@ public class DatabaseClient {
                 context.getApplicationContext(),
                 AppDatabase.class,
                 "app-database"
-        ).build();
+        ).fallbackToDestructiveMigration().build();
+
+
     }
 
     public static synchronized DatabaseClient getInstance(Context context) {

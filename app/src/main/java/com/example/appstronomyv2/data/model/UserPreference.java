@@ -8,13 +8,20 @@ import androidx.room.PrimaryKey;
 public class UserPreference {
     @PrimaryKey(autoGenerate = true)
     private int id;
-
+    private String user_email;
     private String itemId;
     private boolean liked;
 
-    // Getters y Setters
     public int getId() {
         return id;
+    }
+
+    public String getUser_email() {
+        return user_email;
+    }
+
+    public void setUser_email(String user_email) {
+        this.user_email = user_email;
     }
 
     public void setId(int id) {

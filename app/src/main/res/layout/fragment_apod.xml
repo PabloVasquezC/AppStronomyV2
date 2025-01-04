@@ -6,6 +6,22 @@
     android:layout_height="match_parent"
     tools:context=".ui.apod.ApodFragment">
 
+    <Button
+        android:id="@+id/btn_select_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select Date"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/text_apod2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Selected Date: None"
+        android:textSize="16sp"
+        tools:ignore="MissingConstraints" />
+
     <TextView
         android:id="@+id/text_apod"
         android:layout_width="match_parent"

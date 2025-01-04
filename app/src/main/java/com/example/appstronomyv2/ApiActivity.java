@@ -22,7 +22,7 @@ public class ApiActivity extends AppCompatActivity {
 
         ApodService apiService = RetrofitInstance.getRetrofitInstance().create(ApodService.class);
 
-        Call<ApodResponse> call = apiService.getApod(API_KEY, null); // null para obtener la imagen de hoy
+        Call<ApodResponse> call = apiService.getApod(API_KEY, null);
 
         call.enqueue(new Callback<ApodResponse>() {
             @Override

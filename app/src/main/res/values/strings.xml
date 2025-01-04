@@ -10,4 +10,5 @@
     <string name="menu_home">Home</string>
     <string name="menu_gallery">APOD</string>
     <string name="menu_slideshow">Slideshow</string>
+    <string name="selected_date_none">Selected Date: None</string>
 </resources>
