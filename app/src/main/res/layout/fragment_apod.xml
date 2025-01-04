@@ -10,16 +10,11 @@
         android:id="@+id/btn_select_date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Select Date"
-        tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:id="@+id/text_apod2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="Selected Date: None"
-        android:textSize="16sp"
+        android:text="Seleccionar fecha"
+        app:layout_constraintBottom_toBottomOf="@+id/text_apod"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
 
     <TextView
