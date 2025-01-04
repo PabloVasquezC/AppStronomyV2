@@ -7,14 +7,40 @@
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_menu_camera"
-            android:title="@string/menu_home" />
-        <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/menu_gallery" />
+            android:title="AppStronomy" />
+
         <item
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/menu_slideshow" />
+            android:title="Buscar" />
+
+
+        <item
+            android:id="@+id/nav_gallery"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="Apod" />
+
+        -----------------------------------
+
+
+
+
+        <item
+            android:id="@+id/otrositem"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="otroitem" />
+
+
+        <item
+            android:id="@+id/otroitem2"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="otroitem2" />
+
+
+
+
+
+
+
     </group>
 </menu>
