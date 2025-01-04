@@ -35,7 +35,10 @@ android {
     }
 }
 
-dependencies {
+dependencies{
+
+
+
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.constraintlayout)
@@ -54,6 +57,9 @@ dependencies {
     implementation(libs.firebase.analytics)
     implementation(platform(libs.firebase.bom))
 
+
+    implementation(libs.glide)
+    implementation(libs.glideCompiler)
 
     implementation(libs.retrofit)
     implementation(libs.gson)
