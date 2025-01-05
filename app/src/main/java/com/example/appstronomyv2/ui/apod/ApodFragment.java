@@ -46,7 +46,7 @@ public class ApodFragment extends Fragment {
                 requireContext(),
                 (view, selectedYear, selectedMonth, selectedDay) -> {
                     String selectedDate = selectedYear + "-" + (selectedMonth + 1) + "-" + selectedDay;
-                    apodViewModel.setText("Selected Date: " + selectedDate); // Usar setText
+                    apodViewModel.setText("Fecha Seleccionada: " + selectedDate); // Usar setText
                 },
                 year,
                 month,
