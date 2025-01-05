@@ -6,35 +6,26 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/ic_info"
             android:title="AppStronomy" />
+
+
 
         <item
             android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/ic_search"
             android:title="Buscar" />
 
 
         <item
             android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/ic_camera"
             android:title="Apod" />
 
 
 
 
 
-
-        <item
-            android:id="@+id/otrositem"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="otroitem" />
-
-
-        <item
-            android:id="@+id/otroitem2"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="otroitem2" />
 
 
 
