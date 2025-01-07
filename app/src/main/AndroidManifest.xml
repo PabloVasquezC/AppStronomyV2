@@ -24,7 +24,7 @@
         </activity>
 
         <activity
-            android:name=".ApiActivity"
+            android:name=".api.ApiActivity"
             android:exported="true"
             android:label="ApiActivity"
             android:theme="@style/Theme.AppStronomyV2.NoActionBar">

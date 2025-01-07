@@ -10,7 +10,6 @@
             android:title="AppStronomy" />
 
 
-
         <item
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/ic_search"
@@ -22,16 +21,10 @@
             android:icon="@drawable/ic_camera"
             android:title="Apod" />
 
-
-
-
-
-
-
-
-
-
-
+        <item
+            android:id="@+id/gallery"
+            android:icon="@drawable/ic_camera"
+            android:title="Favoritos" />
 
     </group>
 </menu>

@@ -50,13 +50,13 @@ dependencies{
     implementation(libs.room.runtime)
     implementation(libs.firebase.auth)
     implementation(libs.activity)
+    implementation(libs.legacy.support.v4)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
     annotationProcessor(libs.room.compiler)
     implementation(libs.firebase.analytics)
     implementation(platform(libs.firebase.bom))
-
 
     implementation(libs.glide)
     implementation(libs.glideCompiler)

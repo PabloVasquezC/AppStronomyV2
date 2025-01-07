@@ -20,6 +20,7 @@ roomCompiler = "2.6.1"
 googleGmsGoogleServices = "4.4.2"
 firebaseAuth = "23.1.0"
 activity = "1.9.3"
+legacySupportV4 = "1.0.0"
 
 [libraries]
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
@@ -44,6 +45,7 @@ firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version
 activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
 glide = { group = "com.github.bumptech.glide", name = "glide", version = "4.12.0" }
 glideCompiler = { group = "com.github.bumptech.glide", name = "compiler", version = "4.12.0" }
+legacy-support-v4 = { group = "androidx.legacy", name = "legacy-support-v4", version.ref = "legacySupportV4" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

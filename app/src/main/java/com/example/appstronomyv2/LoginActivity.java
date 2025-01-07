@@ -96,5 +96,10 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
+    public void logoutUser() {
+        mAuth.signOut();
+        Toast.makeText(LoginActivity.this, "Usuario desconectado.", Toast.LENGTH_SHORT).show();
+    }
+
 
 }

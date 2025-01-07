@@ -1,12 +1,10 @@
-package com.example.appstronomyv2;
+package com.example.appstronomyv2.api;
 
 import android.os.Bundle;
 import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.appstronomyv2.api.ApodResponse;
-import com.example.appstronomyv2.api.ApodService;
-import com.example.appstronomyv2.api.RetrofitInstance;
+import com.example.appstronomyv2.R;
 
 import retrofit2.Call;
 import retrofit2.Callback;

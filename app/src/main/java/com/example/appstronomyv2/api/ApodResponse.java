@@ -40,5 +40,9 @@ public class ApodResponse {
         this.url = url;
     }
 
+    public String getMediaType() {
+        return media_type;
+    }
+
 }
 

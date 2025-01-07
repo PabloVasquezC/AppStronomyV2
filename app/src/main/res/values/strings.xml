@@ -5,11 +5,12 @@
     <string name="nav_header_title">Android Studio</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
+    <string name="logout">Cerrar Sesión</string>
 
-    <string name="menu_home">Home</string>
-    <string name="menu_gallery">APOD</string>
-    <string name="menu_slideshow">Slideshow</string>
+    <string name="AppStronomy">AppStronomy</string>
+    <string name="APOD">APOD</string>
+    <string name="Search">Buscar</string>
+    <string name="Favorites">Favoritos</string>
     <string name="selected_date_none">Selected Date: None</string>
     <string name="apod_description">\"La sección APOD (Astronomy Picture of the Day) de la API de la NASA te permite explorar imágenes increíbles del universo. Cada día, los astrónomos seleccionan una imagen destacada del espacio, acompañada de una breve descripción escrita por expertos que explica su contexto científico o histórico.\"</string>
     <string name="apod">"Foto del dia de: "</string>

@@ -27,7 +27,6 @@
         android:layout_height="0dp"
         android:contentDescription="TODO"
         android:layout_margin="20dp"
-        android:src="@drawable/saturno"
         app:layout_constraintTop_toBottomOf="@id/apoddescription"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
