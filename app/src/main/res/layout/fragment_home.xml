@@ -37,7 +37,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp" />
 
-
+    <!-- Imagen del logo de la NASA -->
     <ImageView
         android:id="@+id/imageNasa"
         android:layout_width="200dp"
@@ -48,6 +48,34 @@
     app:layout_constraintEnd_toEndOf="parent"
     android:layout_marginTop="24dp" />
 
+    <!-- Texto adicional -->
+    <TextView
+        android:id="@+id/textDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Con esta API, puedes acceder a datos espaciales como imágenes, misiones, meteorología espacial y más. ¡Descubre el cosmos desde la palma de tu mano!"
+        android:textSize="14sp"
+        android:textColor="@android:color/black"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@+id/imageNasa"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp" />
+
+    <!-- Imagen adicional (p.ej. una galaxia o planeta) -->
+    <ImageView
+        android:id="@+id/imageGalaxy"
+        android:layout_width="250dp"
+        android:layout_height="150dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_galaxy"
+    app:layout_constraintTop_toBottomOf="@+id/textDescription"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    android:layout_marginTop="16dp" />
+
     <!-- Botón para explorar más -->
     <Button
         android:id="@+id/btnExplore"
@@ -56,9 +84,9 @@
         android:text="Explorar ahora"
         android:textColor="@android:color/white"
         android:backgroundTint="@color/purple_500"
-    app:layout_constraintTop_toBottomOf="@+id/imageNasa"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    android:layout_marginTop="32dp" />
+        app:layout_constraintTop_toBottomOf="@+id/imageGalaxy"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="32dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
