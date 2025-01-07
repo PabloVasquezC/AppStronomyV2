@@ -1,7 +1,9 @@
 package com.example.appstronomyv2;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -99,4 +101,32 @@ public class MainActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.logout) { // Verifica si el botón "Logout" fue seleccionado
+            logout(); // Llama a la función para cerrar sesión
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void logout() {
+        // Limpia las preferencias compartidas o cualquier sesión activa
+        // Por ejemplo:
+        // SharedPreferences preferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+        // preferences.edit().clear().apply();
+
+        // Redirige al usuario a la pantalla de LoginActivity
+        Intent intent = new Intent(this, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+
+        // Finaliza la MainActivity para evitar volver atrás
+        finish();
+    }
+
+
 }
