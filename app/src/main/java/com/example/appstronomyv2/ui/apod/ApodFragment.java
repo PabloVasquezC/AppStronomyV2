@@ -63,6 +63,8 @@ public class ApodFragment extends Fragment {
                 month,
                 day
         );
+
+        datePickerDialog.getDatePicker().setMaxDate(calendar.getTimeInMillis());
         datePickerDialog.show();
     }
 
