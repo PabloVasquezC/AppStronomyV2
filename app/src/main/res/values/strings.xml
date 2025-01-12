@@ -16,4 +16,5 @@
     <string name="apod">"Foto del dia de: "</string>
     <string name="search_description">search description</string>
     <string name="heart_icon">heart_icon</string>
+    <string name="seleccionar_fecha">Seleccionar fecha</string>
 </resources>
