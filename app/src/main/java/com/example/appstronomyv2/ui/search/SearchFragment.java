@@ -10,22 +10,20 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.appstronomyv2.databinding.FragmentSlideshowBinding;
+import com.example.appstronomyv2.databinding.FragmentSearchBinding;
 
 public class SearchFragment extends Fragment {
 
-    private FragmentSlideshowBinding binding;
+    private FragmentSearchBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         SearchViewModel searchViewModel =
                 new ViewModelProvider(this).get(SearchViewModel.class);
 
-        binding = FragmentSlideshowBinding.inflate(inflater, container, false);
+        binding = FragmentSearchBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textSlideshow;
-        searchViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 

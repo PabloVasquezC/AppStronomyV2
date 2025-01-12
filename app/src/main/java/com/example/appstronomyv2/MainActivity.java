@@ -14,7 +14,6 @@ import com.example.appstronomyv2.data.database.AppDatabase;
 import com.example.appstronomyv2.data.database.DatabaseClient;
 import com.example.appstronomyv2.data.model.UserPreference;
 
-
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.navigation.NavController;
@@ -41,42 +40,15 @@ public class MainActivity extends AppCompatActivity {
         String userEmail = getIntent().getStringExtra("USER_EMAIL");
         Toast.makeText(this, "Bienvenido " + userEmail, Toast.LENGTH_SHORT).show();
 
-
         // Inicializa Room
         appDatabase = DatabaseClient.getInstance(this).getAppDatabase();
-
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         setSupportActionBar(binding.appBarMain.toolbar);
-        binding.appBarMain.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Ejemplo de insertar un nuevo UserPreference en un hilo de fondo
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        UserPreference userPreference = new UserPreference();
-                        userPreference.setItemId("item123");
-                        userPreference.setLiked(true);
 
-                        // Inserta el objeto en la base de datos
-                        appDatabase.userPreferenceDao().insert(userPreference);
 
-                        // Consulta todos los elementos de la base de datos (en otro hilo de fondo)
-                        List<UserPreference> allPreferences = appDatabase.userPreferenceDao().getAllPreferences();
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                // Aquí puedes actualizar la UI con los resultados de la consulta
-                                Toast.makeText(MainActivity.this, "Número de preferencias: " + allPreferences.size(), Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-                }).start();
-            }
-        });
 
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
@@ -88,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -127,6 +101,4 @@ public class MainActivity extends AppCompatActivity {
         // Finaliza la MainActivity para evitar volver atrás
         finish();
     }
-
-
 }

@@ -13,13 +13,19 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.example.appstronomyv2.MainActivity;
 import com.example.appstronomyv2.R;
 import com.example.appstronomyv2.api.ApodService;
 import com.example.appstronomyv2.api.RetrofitInstance;
 import com.example.appstronomyv2.api.ApodResponse;
+import com.example.appstronomyv2.data.database.AppDatabase;
+import com.example.appstronomyv2.data.database.DatabaseClient;
+import com.example.appstronomyv2.data.model.UserPreference;
 import com.example.appstronomyv2.databinding.FragmentApodBinding;
 
 import java.util.Calendar;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -27,6 +33,7 @@ import retrofit2.Response;
 
 public class ApodFragment extends Fragment {
 
+    private AppDatabase appDatabase;
     private FragmentApodBinding binding;
     private ApodViewModel apodViewModel;
     private static final String API_KEY = "gsmdmboriTgUlxWQQPEJ22YuitgZpqsvS6seAd9O"; // Reemplaza con tu API Key
@@ -37,6 +44,11 @@ public class ApodFragment extends Fragment {
         apodViewModel = new ViewModelProvider(this).get(ApodViewModel.class);
         binding = FragmentApodBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+        // Inicializar la base de datos
+        appDatabase = DatabaseClient.getInstance(requireContext()).getAppDatabase();
+
+        setupFloatingActionButton();
 
         // Configurar el botón para seleccionar la fecha
         binding.btnSelectDate.setOnClickListener(v -> showDatePickerDialog());
@@ -68,6 +80,35 @@ public class ApodFragment extends Fragment {
         datePickerDialog.show();
     }
 
+    private void setupFloatingActionButton() {
+        binding.fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        UserPreference userPreference = new UserPreference();
+                        userPreference.setItemId("item123");
+                        userPreference.setLiked(true);
+
+                        // Inserta el objeto en la base de datos
+                        appDatabase.userPreferenceDao().insert(userPreference);
+
+                        // Consulta todos los elementos de la base de datos
+                        List<UserPreference> allPreferences = appDatabase.userPreferenceDao().getAllPreferences();
+                        requireActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                // Actualiza la UI con los resultados de la consulta
+                                Toast.makeText(requireContext(), "Número de preferencias: " + allPreferences.size(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                }).start();
+            }
+        });
+    }
+
     private void fetchApodData(@Nullable String date) {
         ApodService apiService = RetrofitInstance.getRetrofitInstance().create(ApodService.class);
         Call<ApodResponse> call = apiService.getApod(API_KEY, date);
@@ -85,7 +126,8 @@ public class ApodFragment extends Fragment {
                                 .into(binding.imageView);
 
                         // Mostrar el título y la descripción
-                        binding.textApod.setText(apod.getTitle());
+                        binding.apodTitle.setText(apod.getTitle());
+                        binding.apodExplanation.setText(apod.getExplanation());
                     } else {
                         Toast.makeText(requireContext(), "El contenido no es una imagen", Toast.LENGTH_SHORT).show();
                     }
