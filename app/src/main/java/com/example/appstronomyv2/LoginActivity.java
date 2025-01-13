@@ -76,7 +76,7 @@ public class LoginActivity extends AppCompatActivity {
 
                         // Redirigir al MainActivity con el email
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        intent.putExtra("USER_EMAIL", email); // Pasar el email como extra
+                        intent.putExtra("USER_EMAIL", email);  // Pasamos el correo aquí
                         startActivity(intent);
 
                     } else {

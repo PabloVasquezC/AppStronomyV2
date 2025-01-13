@@ -4,16 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
 import androidx.room.Room;
 
 import com.example.appstronomyv2.data.database.AppDatabase;
 import com.example.appstronomyv2.data.database.DatabaseClient;
-import com.example.appstronomyv2.data.model.UserPreference;
-
+import com.example.appstronomyv2.ui.apod.ApodFragment;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.navigation.NavController;
@@ -23,9 +22,7 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.drawerlayout.widget.DrawerLayout;
 import com.example.appstronomyv2.databinding.ActivityMainBinding;
 
-import java.util.List;
-
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
@@ -36,8 +33,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        String userEmail = getIntent().getStringExtra("USER_EMAIL");  // Obtener el email
 
-        String userEmail = getIntent().getStringExtra("USER_EMAIL");
         Toast.makeText(this, "Bienvenido " + userEmail, Toast.LENGTH_SHORT).show();
 
         // Inicializa Room
@@ -48,26 +45,61 @@ public class MainActivity extends AppCompatActivity {
 
         setSupportActionBar(binding.appBarMain.toolbar);
 
-
-
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
+
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
+                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)  // Asegúrate de incluir el ID de ApodFragment
                 .setOpenableLayout(drawer)
                 .build();
+
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        // Configura el listener de navegación para capturar la selección del menú
+        navigationView.setNavigationItemSelectedListener(this);
     }
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        // Verifica si el item seleccionado es el de Apod
+        if (id == R.id.nav_gallery) {
+            String userEmail = getIntent().getStringExtra("USER_EMAIL");
+
+            // Crear y pasar datos al fragmento Apod
+            ApodFragment apodFragment = new ApodFragment();
+            Bundle bundle = new Bundle();
+            bundle.putString("USER_EMAIL", userEmail);
+            apodFragment.setArguments(bundle);
+
+            // Navegar a ApodFragment utilizando el NavController
+            NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+            navController.navigate(R.id.nav_gallery, bundle); // Aquí navegas con el Bundle
+
+            // Cierra el DrawerLayout después de seleccionar un item
+            DrawerLayout drawer = binding.drawerLayout;
+            drawer.closeDrawer(GravityCompat.START);
+            return true;
+        }
+
+        // Maneja navegación a otros fragmentos si es necesario
+        // ...
+
+        DrawerLayout drawer = binding.drawerLayout;
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+
 
     @Override
     public boolean onSupportNavigateUp() {

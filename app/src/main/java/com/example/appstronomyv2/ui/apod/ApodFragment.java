@@ -13,19 +13,15 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
-import com.example.appstronomyv2.MainActivity;
-import com.example.appstronomyv2.R;
+import com.example.appstronomyv2.api.ApodResponse;
 import com.example.appstronomyv2.api.ApodService;
 import com.example.appstronomyv2.api.RetrofitInstance;
-import com.example.appstronomyv2.api.ApodResponse;
 import com.example.appstronomyv2.data.database.AppDatabase;
 import com.example.appstronomyv2.data.database.DatabaseClient;
-import com.example.appstronomyv2.data.model.UserPreference;
+import com.example.appstronomyv2.data.model.SavedApod;
 import com.example.appstronomyv2.databinding.FragmentApodBinding;
 
 import java.util.Calendar;
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -36,6 +32,7 @@ public class ApodFragment extends Fragment {
     private AppDatabase appDatabase;
     private FragmentApodBinding binding;
     private ApodViewModel apodViewModel;
+    private ApodResponse currentApodResponse; // Guardar el APOD actual
     private static final String API_KEY = "gsmdmboriTgUlxWQQPEJ22YuitgZpqsvS6seAd9O"; // Reemplaza con tu API Key
 
     @Nullable
@@ -48,7 +45,19 @@ public class ApodFragment extends Fragment {
         // Inicializar la base de datos
         appDatabase = DatabaseClient.getInstance(requireContext()).getAppDatabase();
 
-        setupFloatingActionButton();
+        // Configurar el FAB para guardar el APOD actual
+        binding.fab.setOnClickListener(v -> {
+            if (currentApodResponse != null) {
+                String userEmail = getArguments() != null ? getArguments().getString("USER_EMAIL") : null;
+                if (userEmail != null) {
+                    saveApodToDatabase(currentApodResponse, userEmail);
+                } else {
+                    Toast.makeText(requireContext(), "No se pudo obtener el email del usuario.", Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                Toast.makeText(requireContext(), "No hay APOD para guardar.", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         // Configurar el botón para seleccionar la fecha
         binding.btnSelectDate.setOnClickListener(v -> showDatePickerDialog());
@@ -61,91 +70,60 @@ public class ApodFragment extends Fragment {
 
     private void showDatePickerDialog() {
         Calendar calendar = Calendar.getInstance();
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-
-        DatePickerDialog datePickerDialog = new DatePickerDialog(
-                requireContext(),
-                (view, selectedYear, selectedMonth, selectedDay) -> {
-                    String selectedDate = selectedYear + "-" + (selectedMonth + 1) + "-" + selectedDay;
+        DatePickerDialog datePickerDialog = new DatePickerDialog(requireContext(),
+                (view, year, month, dayOfMonth) -> {
+                    String selectedDate = String.format("%d-%02d-%02d", year, month + 1, dayOfMonth);
                     fetchApodData(selectedDate);
                 },
-                year,
-                month,
-                day
-        );
-
-        datePickerDialog.getDatePicker().setMaxDate(calendar.getTimeInMillis());
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH));
         datePickerDialog.show();
     }
 
-    private void setupFloatingActionButton() {
-        binding.fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        UserPreference userPreference = new UserPreference();
-                        userPreference.setItemId("item123");
-                        userPreference.setLiked(true);
-
-                        // Inserta el objeto en la base de datos
-                        appDatabase.userPreferenceDao().insert(userPreference);
-
-                        // Consulta todos los elementos de la base de datos
-                        List<UserPreference> allPreferences = appDatabase.userPreferenceDao().getAllPreferences();
-                        requireActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                // Actualiza la UI con los resultados de la consulta
-                                Toast.makeText(requireContext(), "Número de preferencias: " + allPreferences.size(), Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
-                }).start();
-            }
-        });
-    }
-
     private void fetchApodData(@Nullable String date) {
-        ApodService apiService = RetrofitInstance.getRetrofitInstance().create(ApodService.class);
-        Call<ApodResponse> call = apiService.getApod(API_KEY, date);
+        ApodService service = RetrofitInstance.getRetrofitInstance().create(ApodService.class);
+        Call<ApodResponse> call = service.getApod(API_KEY, date);
 
         call.enqueue(new Callback<ApodResponse>() {
             @Override
             public void onResponse(Call<ApodResponse> call, Response<ApodResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    ApodResponse apod = response.body();
+                    ApodResponse apodResponse = response.body();
+                    currentApodResponse = apodResponse; // Guardar el APOD actual
 
-                    if ("image".equals(apod.getMediaType())) {
-                        // Cargar la imagen con Glide
-                        Glide.with(ApodFragment.this)
-                                .load(apod.getUrl())
-                                .into(binding.imageView);
-
-                        // Mostrar el título y la descripción
-                        binding.apodTitle.setText(apod.getTitle());
-                        binding.apodExplanation.setText(apod.getExplanation());
-                    } else {
-                        Toast.makeText(requireContext(), "El contenido no es una imagen", Toast.LENGTH_SHORT).show();
-                    }
+                    // Mostrar los datos en la UI
+                    binding.apodTitle.setText(apodResponse.getTitle());
+                    binding.apodExplanation.setText(apodResponse.getExplanation());
+                    Glide.with(requireContext())
+                            .load(apodResponse.getUrl())
+                            .into(binding.imageView);
                 } else {
-                    Toast.makeText(requireContext(), "Error al obtener los datos", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(requireContext(), "Error al obtener el APOD.", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<ApodResponse> call, Throwable t) {
-                Toast.makeText(requireContext(), "Fallo en la conexión: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(requireContext(), "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
+    private void saveApodToDatabase(ApodResponse apodResponse, String userEmail) {
+        // Crear una instancia de SavedApod con los datos del APOD
+        SavedApod savedApod = new SavedApod();
+        savedApod.setTitle(apodResponse.getTitle());
+        savedApod.setExplanation(apodResponse.getExplanation());
+        savedApod.setUrl(apodResponse.getUrl());
+        savedApod.setUser_email(userEmail);
+
+        // Guardar el APOD en la base de datos usando un hilo separado
+        new Thread(() -> {
+            appDatabase.savedApodDao().insert(savedApod);
+            requireActivity().runOnUiThread(() ->
+                    Toast.makeText(requireContext(), "APOD guardado correctamente.", Toast.LENGTH_SHORT).show()
+            );
+        }).start();
     }
 }

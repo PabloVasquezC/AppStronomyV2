@@ -6,6 +6,7 @@ public class ApodResponse {
     private String title;
     private String url;
     private String media_type;
+    private String hdurl;
 
     // Getters y setters
     public String getDate() {
@@ -42,6 +43,18 @@ public class ApodResponse {
 
     public String getMediaType() {
         return media_type;
+    }
+
+    public void setMediaType(String media_type) {
+        this.media_type = media_type;
+    }
+
+    public void setHdurl(String hdurl) {
+        this.hdurl = hdurl;
+    }
+
+    public String getHdurl() {
+        return hdurl;
     }
 
 }

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/nav_home">
+
+    <!-- Destino Home (Tu fragmento Home) -->
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.example.appstronomyv2.ui.home.HomeFragment"
+        android:label="Home"
+        tools:layout="@layout/fragment_home" />
+
+    <!-- Destino ApodFragment -->
+    <fragment
+        android:id="@+id/nav_gallery"
+        android:name="com.example.appstronomyv2.ui.apod.ApodFragment"
+        android:label="APOD"
+        tools:layout="@layout/fragment_apod" />
+
+
+</navigation>

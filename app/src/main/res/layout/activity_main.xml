@@ -8,12 +8,20 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
+    <!-- Contenedor principal de la interfaz de la aplicación -->
     <include
         android:id="@+id/app_bar_main"
         layout="@layout/app_bar_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
+    <!-- Contenedor de fragmentos donde se cargarán los fragments -->
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <!-- Drawer para navegación lateral -->
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"
