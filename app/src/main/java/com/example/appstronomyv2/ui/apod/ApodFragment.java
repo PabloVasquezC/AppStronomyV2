@@ -32,8 +32,8 @@ public class ApodFragment extends Fragment {
     private AppDatabase appDatabase;
     private FragmentApodBinding binding;
     private ApodViewModel apodViewModel;
-    private ApodResponse currentApodResponse; // Guardar el APOD actual
-    private static final String API_KEY = "gsmdmboriTgUlxWQQPEJ22YuitgZpqsvS6seAd9O"; // Reemplaza con tu API Key
+    private ApodResponse currentApodResponse;
+    private static final String API_KEY = "gsmdmboriTgUlxWQQPEJ22YuitgZpqsvS6seAd9O";
 
     @Nullable
     @Override
@@ -42,10 +42,8 @@ public class ApodFragment extends Fragment {
         binding = FragmentApodBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        // Inicializar la base de datos
         appDatabase = DatabaseClient.getInstance(requireContext()).getAppDatabase();
 
-        // Configurar el FAB para guardar el APOD actual
         binding.fab.setOnClickListener(v -> {
             if (currentApodResponse != null) {
                 String userEmail = getArguments() != null ? getArguments().getString("USER_EMAIL") : null;
@@ -59,10 +57,8 @@ public class ApodFragment extends Fragment {
             }
         });
 
-        // Configurar el botón para seleccionar la fecha
         binding.btnSelectDate.setOnClickListener(v -> showDatePickerDialog());
 
-        // Llamar a la API para obtener la imagen del día
         fetchApodData(null);
 
         return root;
@@ -70,6 +66,7 @@ public class ApodFragment extends Fragment {
 
     private void showDatePickerDialog() {
         Calendar calendar = Calendar.getInstance();
+
         DatePickerDialog datePickerDialog = new DatePickerDialog(requireContext(),
                 (view, year, month, dayOfMonth) -> {
                     String selectedDate = String.format("%d-%02d-%02d", year, month + 1, dayOfMonth);
@@ -78,6 +75,7 @@ public class ApodFragment extends Fragment {
                 calendar.get(Calendar.YEAR),
                 calendar.get(Calendar.MONTH),
                 calendar.get(Calendar.DAY_OF_MONTH));
+        datePickerDialog.getDatePicker().setMaxDate(calendar.getTimeInMillis());
         datePickerDialog.show();
     }
 
@@ -90,9 +88,8 @@ public class ApodFragment extends Fragment {
             public void onResponse(Call<ApodResponse> call, Response<ApodResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     ApodResponse apodResponse = response.body();
-                    currentApodResponse = apodResponse; // Guardar el APOD actual
+                    currentApodResponse = apodResponse;
 
-                    // Mostrar los datos en la UI
                     binding.apodTitle.setText(apodResponse.getTitle());
                     binding.apodExplanation.setText(apodResponse.getExplanation());
                     Glide.with(requireContext())
@@ -111,7 +108,6 @@ public class ApodFragment extends Fragment {
     }
 
     private void saveApodToDatabase(ApodResponse apodResponse, String userEmail) {
-        // Crear una instancia de SavedApod con los datos del APOD
         SavedApod savedApod = new SavedApod();
         savedApod.setTitle(apodResponse.getTitle());
         savedApod.setExplanation(apodResponse.getExplanation());
@@ -122,7 +118,7 @@ public class ApodFragment extends Fragment {
         new Thread(() -> {
             appDatabase.savedApodDao().insert(savedApod);
             requireActivity().runOnUiThread(() ->
-                    Toast.makeText(requireContext(), "APOD guardado correctamente.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "🚀 Foto Astronómica del dia guardada correctamente.", Toast.LENGTH_SHORT).show()
             );
         }).start();
     }

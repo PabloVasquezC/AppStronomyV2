@@ -22,4 +22,10 @@
         android:name="com.example.appstronomyv2.ui.search.SearchFragment"
         android:label="@string/Search"
         tools:layout="@layout/fragment_search" />
+
+    <fragment
+        android:id="@+id/nav_favorites"
+        android:name="com.example.appstronomyv2.ui.Favorites.FavoritesFragment"
+        android:label="Favoritos"
+        tools:layout="@layout/fragment_favorites" />
 </navigation>

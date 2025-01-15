@@ -17,4 +17,6 @@
     <string name="search_description">search description</string>
     <string name="heart_icon">heart_icon</string>
     <string name="seleccionar_fecha">Seleccionar fecha</string>
+    <string name="texto_bienvenida">Bienvenido/a a la exploración del cosmos! Explora las maravillas del universo con nosotros. La NASA comparte un mundo de descubrimientos cada día. ¡Que tengas un día lleno de inspiración estelar!</string>
+    <string name="appstronomy">AppStronomy</string>
 </resources>

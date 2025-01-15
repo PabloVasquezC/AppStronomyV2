@@ -20,4 +20,7 @@ public interface SavedApodDao {
 
     @Query("SELECT * FROM SavedApod WHERE user_email = :userEmail")
     List<SavedApod> getApodsByUser(String userEmail);
+
+    @Query("DELETE FROM SavedApod WHERE user_email = :userEmail")
+    void deleteApodsByUser(String userEmail);
 }

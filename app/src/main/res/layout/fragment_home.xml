@@ -11,7 +11,7 @@
         android:id="@+id/textHome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Bienvenido a la API de la NASA"
+        android:text="@string/appstronomy"
         android:textSize="24sp"
         android:textStyle="bold"
         android:textColor="@android:color/black"
@@ -21,39 +21,40 @@
         app:layout_constraintHorizontal_bias="0.5"
         android:layout_marginTop="32dp" />
 
-    <!-- Subtítulo -->
+
+    <!-- Imagen del logo de la NASA -->
     <TextView
         android:id="@+id/textSubtitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Explora el universo con los datos y servicios proporcionados por la NASA."
-        android:textSize="16sp"
-        android:textColor="@android:color/darker_gray"
-        android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@+id/textHome"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp" />
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="16dp"
+        android:gravity="center"
+        android:text="Explora el universo con los datos y servicios proporcionados por la NASA."
+        android:textColor="@android:color/darker_gray"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textHome" />
 
-    <!-- Imagen del logo de la NASA -->
     <ImageView
         android:id="@+id/imageNasa"
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:src="@drawable/ic_nasa_logo"
-    app:layout_constraintTop_toBottomOf="@+id/textSubtitle"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    android:layout_marginTop="24dp" />
+        app:layout_constraintTop_toBottomOf="@+id/textSubtitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="24dp" />
 
     <!-- Texto adicional -->
     <TextView
         android:id="@+id/textDescription"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Con esta API, puedes acceder a datos espaciales como imágenes, misiones, meteorología espacial y más. ¡Descubre el cosmos desde la palma de tu mano!"
+        android:text="@string/texto_bienvenida"
         android:textSize="14sp"
         android:textColor="@android:color/black"
         android:gravity="center"
@@ -64,7 +65,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp" />
 
-    <!-- Imagen adicional (p.ej. una galaxia o planeta) -->
+
     <ImageView
         android:id="@+id/imageGalaxy"
         android:layout_width="250dp"
@@ -76,17 +77,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="16dp" />
 
-    <!-- Botón para explorar más -->
-    <Button
-        android:id="@+id/btnExplore"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Explorar ahora"
-        android:textColor="@android:color/white"
-        android:backgroundTint="@color/purple_500"
-        app:layout_constraintTop_toBottomOf="@+id/imageGalaxy"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="32dp" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

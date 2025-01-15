@@ -5,16 +5,13 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
-import androidx.room.Room;
-
 import com.example.appstronomyv2.data.database.AppDatabase;
 import com.example.appstronomyv2.data.database.DatabaseClient;
+import com.example.appstronomyv2.ui.Favorites.FavoritesFragment;
 import com.example.appstronomyv2.ui.apod.ApodFragment;
 import com.google.android.material.navigation.NavigationView;
-
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -27,17 +24,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
 
-    // Instancia de la base de datos
     private AppDatabase appDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        String userEmail = getIntent().getStringExtra("USER_EMAIL");  // Obtener el email
+        String userEmail = getIntent().getStringExtra("USER_EMAIL");
 
         Toast.makeText(this, "Bienvenido " + userEmail, Toast.LENGTH_SHORT).show();
 
-        // Inicializa Room
         appDatabase = DatabaseClient.getInstance(this).getAppDatabase();
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
@@ -49,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = binding.navView;
 
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)  // Asegúrate de incluir el ID de ApodFragment
+                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow, R.id.nav_favorites)
                 .setOpenableLayout(drawer)
                 .build();
 
@@ -57,7 +52,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-        // Configura el listener de navegación para capturar la selección del menú
+
         navigationView.setNavigationItemSelectedListener(this);
     }
 
@@ -71,28 +66,44 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onNavigationItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        // Verifica si el item seleccionado es el de Apod
+
         if (id == R.id.nav_gallery) {
             String userEmail = getIntent().getStringExtra("USER_EMAIL");
 
-            // Crear y pasar datos al fragmento Apod
+
             ApodFragment apodFragment = new ApodFragment();
             Bundle bundle = new Bundle();
             bundle.putString("USER_EMAIL", userEmail);
             apodFragment.setArguments(bundle);
 
-            // Navegar a ApodFragment utilizando el NavController
-            NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-            navController.navigate(R.id.nav_gallery, bundle); // Aquí navegas con el Bundle
 
-            // Cierra el DrawerLayout después de seleccionar un item
+            NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+            navController.navigate(R.id.nav_gallery, bundle);
+
+
             DrawerLayout drawer = binding.drawerLayout;
             drawer.closeDrawer(GravityCompat.START);
             return true;
         }
 
-        // Maneja navegación a otros fragmentos si es necesario
-        // ...
+        if (id == R.id.nav_favorites) {
+            String userEmail = getIntent().getStringExtra("USER_EMAIL");
+
+
+            FavoritesFragment favoritesFragment = new FavoritesFragment();
+            Bundle bundle = new Bundle();
+            bundle.putString("USER_EMAIL", userEmail);
+            favoritesFragment.setArguments(bundle);
+
+
+            NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
+            navController.navigate(R.id.nav_favorites, bundle);
+
+
+            DrawerLayout drawer = binding.drawerLayout;
+            drawer.closeDrawer(GravityCompat.START);
+            return true;
+        }
 
         DrawerLayout drawer = binding.drawerLayout;
         drawer.closeDrawer(GravityCompat.START);
@@ -112,25 +123,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.logout) { // Verifica si el botón "Logout" fue seleccionado
-            logout(); // Llama a la función para cerrar sesión
+        if (id == R.id.logout) {
+            logout();
             return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
     private void logout() {
-        // Limpia las preferencias compartidas o cualquier sesión activa
-        // Por ejemplo:
-        // SharedPreferences preferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
-        // preferences.edit().clear().apply();
 
-        // Redirige al usuario a la pantalla de LoginActivity
         Intent intent = new Intent(this, LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
-
-        // Finaliza la MainActivity para evitar volver atrás
         finish();
     }
 }
