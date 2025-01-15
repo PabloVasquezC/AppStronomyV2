@@ -22,7 +22,7 @@ import com.example.appstronomyv2.databinding.FragmentFavoritesBinding;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FavoritesFragment extends Fragment {
+public class FavoritesFragment extends Fragment implements FavoritesAdapter.OnDeleteClickListener {
 
     private FavoritesViewModel mViewModel;
     private AppDatabase appDatabase;
@@ -66,8 +66,30 @@ public class FavoritesFragment extends Fragment {
 
             // Actualizar el RecyclerView en el hilo principal
             requireActivity().runOnUiThread(() -> {
-                adapter = new FavoritesAdapter(apodList);
+                // Pasar la lógica de eliminación al adapter
+                adapter = new FavoritesAdapter(apodList, this);
                 recyclerView.setAdapter(adapter);
+            });
+        }).start();
+    }
+
+    @Override
+    public void onDeleteClick(SavedApod apod) {
+        // Llamar a la función para eliminar el apod de la base de datos
+        deleteSavedApod(apod);
+    }
+
+    // Función de eliminación
+    private void deleteSavedApod(SavedApod apod) {
+        new Thread(() -> {
+            // Eliminar el apod de la base de datos
+            appDatabase.savedApodDao().deleteApodsByUser(apod.getUser_email());
+
+            // Actualizar la UI en el hilo principal
+            requireActivity().runOnUiThread(() -> {
+                // Eliminar el apod de la lista y actualizar el RecyclerView
+                apodList.remove(apod);
+                adapter.notifyDataSetChanged();
             });
         }).start();
     }
@@ -78,3 +100,4 @@ public class FavoritesFragment extends Fragment {
         binding = null;
     }
 }
+

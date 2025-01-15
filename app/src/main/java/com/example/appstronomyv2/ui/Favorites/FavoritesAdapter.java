@@ -3,6 +3,7 @@ package com.example.appstronomyv2.ui.Favorites;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -15,34 +16,40 @@ import com.example.appstronomyv2.data.model.SavedApod;
 
 import java.util.List;
 
-public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.FavoritesViewHolder> {
+public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.ViewHolder> {
 
     private List<SavedApod> apodList;
+    private OnDeleteClickListener onDeleteClickListener;
 
-    // Constructor
-    public FavoritesAdapter(List<SavedApod> apodList) {
+    public interface OnDeleteClickListener {
+        void onDeleteClick(SavedApod apod);
+    }
+
+    public FavoritesAdapter(List<SavedApod> apodList, OnDeleteClickListener onDeleteClickListener) {
         this.apodList = apodList;
+        this.onDeleteClickListener = onDeleteClickListener;
     }
 
     @NonNull
     @Override
-    public FavoritesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_favorite, parent, false);
-        return new FavoritesViewHolder(view);
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_favorite, parent, false);
+        return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull FavoritesViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         SavedApod apod = apodList.get(position);
+        holder.title.setText(apod.getTitle());
+        holder.explanation.setText(apod.getExplanation());
+        Glide.with(holder.image.getContext()).load(apod.getUrl()).into(holder.image);
 
-        holder.titleTextView.setText(apod.getTitle());
-        holder.explanationTextView.setText(apod.getExplanation());
-
-        // Usar Glide para cargar la imagen
-        Glide.with(holder.itemView.getContext())
-                .load(apod.getUrl())
-                .into(holder.imageView);
+        // Configurar el botón de eliminar
+        holder.deleteButton.setOnClickListener(v -> {
+            if (onDeleteClickListener != null) {
+                onDeleteClickListener.onDeleteClick(apod);
+            }
+        });
     }
 
     @Override
@@ -50,18 +57,19 @@ public class FavoritesAdapter extends RecyclerView.Adapter<FavoritesAdapter.Favo
         return apodList.size();
     }
 
-    // ViewHolder interno
-    public static class FavoritesViewHolder extends RecyclerView.ViewHolder {
-        TextView titleTextView;
-        TextView explanationTextView;
-        ImageView imageView;
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        ImageView image;
+        TextView title;
+        TextView explanation;
+        Button deleteButton;
 
-        public FavoritesViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView) {
             super(itemView);
-
-            titleTextView = itemView.findViewById(R.id.text_title);
-            explanationTextView = itemView.findViewById(R.id.text_explanation);
-            imageView = itemView.findViewById(R.id.image_apod);
+            image = itemView.findViewById(R.id.image_apod);
+            title = itemView.findViewById(R.id.text_title);
+            explanation = itemView.findViewById(R.id.text_explanation);
+            deleteButton = itemView.findViewById(R.id.button_delete);
         }
     }
 }
+
