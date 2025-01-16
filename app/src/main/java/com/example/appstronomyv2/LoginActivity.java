@@ -18,11 +18,12 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private EditText passwordEditText, emailEditText ;
+    private EditText passwordEditText, emailEditText;
     private Button loginButton, registerButton;
-
+    private TextView forgotPasswordTextView;
 
     private FirebaseAuth mAuth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +37,7 @@ public class LoginActivity extends AppCompatActivity {
         passwordEditText = findViewById(R.id.editTextPassword);
         loginButton = findViewById(R.id.buttonLogin);
         registerButton = findViewById(R.id.buttonregistrarse);
+        forgotPasswordTextView = findViewById(R.id.textViewForgotPassword);
 
         // Maneja el inicio de sesión
         loginButton.setOnClickListener(v -> {
@@ -56,7 +58,6 @@ public class LoginActivity extends AppCompatActivity {
             String password = passwordEditText.getText().toString().trim();
 
             if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
-
                 Toast.makeText(LoginActivity.this, "Por favor, ingresa un correo y una contraseña.", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -64,9 +65,18 @@ public class LoginActivity extends AppCompatActivity {
             registerUser(email, password);
         });
 
+        // Maneja el restablecimiento de contraseña
+        forgotPasswordTextView.setOnClickListener(v -> {
+            String email = emailEditText.getText().toString().trim();
+
+            if (TextUtils.isEmpty(email)) {
+                Toast.makeText(LoginActivity.this, "Por favor, ingresa tu correo para restablecer la contraseña.", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            resetPassword(email);
+        });
     }
-
-
 
     private void loginUser(String email, String password) {
         mAuth.signInWithEmailAndPassword(email, password)
@@ -76,7 +86,7 @@ public class LoginActivity extends AppCompatActivity {
 
                         // Redirigir al MainActivity con el email
                         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        intent.putExtra("USER_EMAIL", email);  // Pasamos el correo aquí
+                        intent.putExtra("USER_EMAIL", email);
                         startActivity(intent);
 
                     } else {
@@ -96,10 +106,14 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
-    public void logoutUser() {
-        mAuth.signOut();
-        Toast.makeText(LoginActivity.this, "Usuario desconectado.", Toast.LENGTH_SHORT).show();
+    private void resetPassword(String email) {
+        mAuth.sendPasswordResetEmail(email)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(LoginActivity.this, "Correo de restablecimiento enviado a " + email, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(LoginActivity.this, "Error: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
-
-
 }
