@@ -1,5 +1,6 @@
 package com.example.appstronomyv2.ui.Favorites;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -75,8 +76,25 @@ public class FavoritesFragment extends Fragment implements FavoritesAdapter.OnDe
 
     @Override
     public void onDeleteClick(SavedApod apod) {
-        // Llamar a la función para eliminar el apod de la base de datos
-        deleteSavedApod(apod);
+        // Mostrar el modal de confirmación
+        showDeleteConfirmationDialog(apod);
+    }
+
+    private void showDeleteConfirmationDialog(SavedApod apod) {
+        // Crear un AlertDialog.Builder
+        new AlertDialog.Builder(requireContext())
+                .setTitle("Confirmar eliminación")
+                .setMessage("¿Estás seguro de que deseas eliminar este APOD de tus favoritos?")
+                .setPositiveButton("Eliminar", (dialog, which) -> {
+
+                    deleteSavedApod(apod);
+                })
+                .setNegativeButton("Cancelar", (dialog, which) -> {
+                    // Si el usuario cancela, no hacer nada
+                    dialog.dismiss();
+                })
+                .setCancelable(false)
+                .show();
     }
 
     // Función de eliminación
